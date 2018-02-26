@@ -110,9 +110,7 @@ class CRM_Msgtplmerge_Utils {
         'entity_id' => $activityId,
         'name' => $fileName,
         'mime_type' => $mimeType,
-        'options' => array(
-          'move-file' => $tee->getFileName(),
-        ),
+        'content' => file_get_contents($tee->getFileName()),
       ));
     }
     
