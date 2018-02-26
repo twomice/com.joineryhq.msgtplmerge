@@ -18,18 +18,16 @@ civicrm_api3('MessageTemplate', 'merge', $params);
 * `pdf_format_id`: (Int) **Optional**. Value of `civicrm_option_value.value` for
   the desired option in the 'PDF Formats' option group. If omitted, the Default
   format is used. If given and no such PDF format exists, an exception is thrown.
-* `document_type`: (String) **Optional**. One of: 'pdf', 'docx', 'odt', 'html'.
-  Defaults to 'pdf'. Unsupported values will throw an exception. Supported values
-  are:
-  * pdf
-  * [other values may be supported in future versions]
 * `source_contact_id`: **Optional**. Value of contact.id for contact to be
   recorded as the creator of the corresponding "Print PDF Letter" activity. If
   not given, the current logged in user is used. If no such contact exists, no
   activity is created.
+* `document_type`: (String) **Optional**. **Experimental**: Currently this is ignored
+  and the value \'pdf\' is always used. One of: \'pdf\', \'docx\', \'odt\',
+  \'html\'. Defaults to \'pdf\'.
 
 ## API result for MessageTemplate.merge:
-This API, like CiviCRM native "Print/Merge Document" functionalty, will create 
+This API, like CiviCRM native "Print/Merge Document" functionalty, will create
 a temporary file containing the merged contents in the appropriate file format.
 
 A successful API call will include the temporary filename:

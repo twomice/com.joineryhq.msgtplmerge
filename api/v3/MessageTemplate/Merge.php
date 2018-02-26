@@ -31,22 +31,10 @@ function _civicrm_api3_message_template_Merge_spec(&$spec) {
   );
   $spec['document_type'] = array(
     'api.required' => 0,
-    'description' => 'One of: \'pdf\', \'docx\', \'odt\', \'html\'. Defaults to \'pdf\'. Unsupported values will throw an exception. Supported values are: pdf; other values may be supported in future versions.',
+    'description' => 'EXPERIMENTAL: Currently this is ignored and the value \'pdf\' is always used. One of: \'pdf\', \'docx\', \'odt\', \'html\'. Defaults to \'pdf\'.',
     'api.default' => 'pdf',
     'type' => CRM_Utils_Type::T_STRING,
     'title' => 'Document Type',
-  );
-  $spec['destination'] = array(
-    'api.required' => 0,
-    'description' => 'EXPERIMENTAL. Indicates what should be done with the merged data: \'return\': Return the data as a string; \'file\': Save the file to the location given in `filepath`; \'download\': Send to the browser as a downloadable file.',
-    'type' => CRM_Utils_Type::T_STRING,
-    'title' => 'Destination',
-  );  
-  $spec['filepath'] = array(
-    'api.required' => 0,
-    'description' => 'A full system path and filename. If `destination` is set to \'file\' (in which case this parameter is required), save the file to this location.',
-    'type' => CRM_Utils_Type::T_STRING,
-    'title' => 'File Path',
   );
   $spec['source_contact_id'] = array(
     'api.required' => 0,
