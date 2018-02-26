@@ -70,9 +70,16 @@ class CRM_Msgtplmerge_Utils {
 
     if ($type == 'pdf') {
       $fileName = "CiviLetter.$type";
-      CRM_Utils_PDF_Utils::html2pdf($html, $fileName, FALSE, $pdfFormatId);
+      // echo output; note third parameter of CRM_Utils_PDF_Utils::html2pdf()
+      // is TRUE, forcing return of PDF contents (otherwise it will send 
+      // Content-Type and Content-Disposition headers in anticipation of download,
+      // and event though $tee is capturing the buffer, the headers will still
+      // go out, breaking any in-browser workflow.
+      echo CRM_Utils_PDF_Utils::html2pdf($html, $fileName, TRUE, $pdfFormatId);
     }
     else {
+      // This execution path currently will never happen because we force
+      // api params['document_type'] to 'pdf'.
       $fileName = "CiviLetter.$type";
       CRM_Utils_PDF_Document::html2doc($html, $fileName, $pdfFormatId);
     }
@@ -109,7 +116,10 @@ class CRM_Msgtplmerge_Utils {
       ));
     }
     
-    return $tee->getFileName();
+    return array(
+      'tmp_file_name' => $tee->getFileName(),
+      'activity_id' => $activityId,
+    );
 
   }
   

@@ -36,9 +36,12 @@ A successful API call will include the temporary filename:
     "is_error": 0,
     "version": 3,
     "count": 1,
-    "id": "tmpFileName",
-    "values": {
-        "tmpFileName": "/tmp/ConsoleTee-mAvyJq"
-    }
+    "id": 0,
+    "values": [
+        {
+            "tmp_file_name": "/tmp/ConsoleTee-6APMdp",
+            "activity_id": 766
+        }
+    ]
 }
 ```

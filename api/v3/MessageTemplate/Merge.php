@@ -54,7 +54,7 @@ function _civicrm_api3_message_template_Merge_spec(&$spec) {
  * @throws API_Exception
  */
 function civicrm_api3_message_template_Merge($params) {
-  
+
   if (CRM_Utils_Array::value('destination', $params) == 'file' && !CRM_Utils_Array::value('filepath', $params)) {
     throw new API_Exception(
       "Mandatory key(s) missing from params array: filepath required when destination='file'.",
@@ -62,29 +62,29 @@ function civicrm_api3_message_template_Merge($params) {
       array("fields" => array('destination', 'filepath'))
     );
   }
-  
+
   if (!CRM_Msgtplmerge_Utils::contactExists($params['contact_id'])) {
     throw new API_Exception(
       "contact_id is not valid: {$params['contact_id']}",
       "contact_not_found",
       array("fields" => array('contact_id'))
-    );      
+    );
   }
   if (!CRM_Msgtplmerge_Utils::msgTemplateExists($params['msg_template_id'])) {
     throw new API_Exception(
       "msg_template_id is not valid: {$params['msg_template_id']}",
       "msg_template_not_found",
       array("fields" => array('msg_template_id'))
-    );      
+    );
   }
 
-  $tmpFileName = CRM_Msgtplmerge_Utils::merge($params['contact_id'], $params['msg_template_id'], $params['pdf_format_id'], $params['document_type'], $params['source_contact_id']);
+  // Force file format to PDF.
+  $params['document_type'] = 'pdf';
 
-  if ($tmpFileName) {
-    $returnValues = array(
-      'tmpFileName' => $tmpFileName,
-    );
-    return civicrm_api3_create_success($returnValues, $params, 'MessageTemplate', 'merge');
+  $returnValues = CRM_Msgtplmerge_Utils::merge($params['contact_id'], $params['msg_template_id'], $params['pdf_format_id'], $params['document_type'], $params['source_contact_id']);
+
+  if (CRM_Utils_Array::value('tmp_file_name', $returnValues)) {
+    return civicrm_api3_create_success(array($returnValues), $params, 'MessageTemplate', 'merge');
   }
   else {
     return civicrm_api3_create_error('Document creation failed.', $params);
