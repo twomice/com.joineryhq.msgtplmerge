@@ -1,5 +1,5 @@
 <?php
-use CRM_Msgtplmerge_ExtensionUtil as E;
+// use CRM_Msgtplmerge_ExtensionUtil as E;
 
 /**
  * MessageTemplate.Merge API specification (optional)
