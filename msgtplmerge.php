@@ -1,7 +1,7 @@
 <?php
 
 require_once 'msgtplmerge.civix.php';
-// use CRM_Msgtplmerge_ExtensionUtil as E;
+use CRM_Msgtplmerge_ExtensionUtil as E;
 
 /**
  * Implements hook_civicrm_config().
