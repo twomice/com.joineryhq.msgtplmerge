@@ -5,13 +5,13 @@
  *
  */
 class CRM_Msgtplmerge_Utils {
-  
+
   /**
    * Borrowed heavily from CRM_Contact_Form_Task_PDFLetterCommon::postProcess(),
    * CiviCRM version 4.7.28.
-   * 
+   *
    * Create a merged document.
-   * 
+   *
    * @param Int $contactId
    * @param Int $messageTemplateId
    * @param Int $pdfFormatId
@@ -21,17 +21,17 @@ class CRM_Msgtplmerge_Utils {
    * @throws \CRM_Core_Exception
    */
   public static function merge($contactId, $messageTemplateId, $pdfFormatId = 0, $type = 'pdf', $source_contact_id = NULL) {
-    
+
     $html_message = civicrm_api3('messageTemplate', 'getValue', array(
       'return' => 'msg_html',
       'id' => $messageTemplateId,
     ));
-    
+
     $formValues = array(
       'html_message' => $html_message,
     );
     list($formValues, $categories, $html_message, $messageToken, $returnProperties) = CRM_Contact_Form_Task_PDFLetterCommon::processMessageTemplate($formValues);
-    
+
     $skipOnHold = FALSE;
     $skipDeceased = FALSE;
     $html = $activityIds = array();
@@ -62,7 +62,7 @@ class CRM_Msgtplmerge_Utils {
     }
 
     $html = $tokenHtml;
-    
+
     $tee = CRM_Msgtplmerge_ConsoleTree::create()->start();
 
     $mimeType = self::getMimeType($type);
@@ -71,7 +71,7 @@ class CRM_Msgtplmerge_Utils {
     if ($type == 'pdf') {
       $fileName = "CiviLetter.$type";
       // echo output; note third parameter of CRM_Utils_PDF_Utils::html2pdf()
-      // is TRUE, forcing return of PDF contents (otherwise it will send 
+      // is TRUE, forcing return of PDF contents (otherwise it will send
       // Content-Type and Content-Disposition headers in anticipation of download,
       // and event though $tee is capturing the buffer, the headers will still
       // go out, breaking any in-browser workflow.
@@ -113,18 +113,18 @@ class CRM_Msgtplmerge_Utils {
         'content' => file_get_contents($tee->getFileName()),
       ));
     }
-    
+
     return array(
       'tmp_file_name' => $tee->getFileName(),
       'activity_id' => $activityId,
     );
 
   }
-  
+
   /**
    * Copied verbatim from CRM_Contact_Form_Task_PDFLetterCommon::getMimeType(),
    * CiviCRM version 4.7.28.
-   * 
+   *
    * Convert from a vague-type/file-extension to mime-type.
    *
    * @param string $type
@@ -151,10 +151,11 @@ class CRM_Msgtplmerge_Utils {
       'id' => $cid,
     ));
   }
-  
+
   public static function msgTemplateExists($id) {
     return (bool) civicrm_api3('MessageTemplate', 'getCount', array(
       'id' => $id,
     ));
   }
+
 }
